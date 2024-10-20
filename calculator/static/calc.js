@@ -5,17 +5,27 @@ let result = 0;
 let length = 0;
 let op1 = document.querySelector("#op1");
 let op2 = document.querySelector("#op2");
-
 let numbers = document.querySelectorAll(".btn-normal");
 let clr = document.querySelector("#clear");
 let sqrt = document.querySelector("#sqrt");
 let back = document.querySelector("#back");
 let ans = document.querySelector("#result");
-let operators = document.querySelectorAll("#op");
+let operators = document.querySelectorAll(".op");
 
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
-    op1.value += num.innerText;
+    if((op1.value == "0" || op1.value == "") && (num.innerText != ".")){
+      op1.value = num.innerText;
+    }
+    else if((op1.value == "0" || op1.value == "") && (num.innerText == ".")){
+      op1.value = "0.";
+    }
+    else if(op1.value.includes(".") && (num.innerText == ".")){
+      op1.value = op1.value;
+    }
+    else{
+      op1.value += num.innerText;
+    }
   });
 });
 
@@ -29,6 +39,9 @@ sqrt.addEventListener("click", () => {
   if (op1.value != "" || op1.value != 0) {
     op2.value = Math.sqrt(parseFloat(op1.value));
     op1.value = "";
+  }
+  else {
+    alert("Enter a number first!");
   }
 });
 
@@ -46,7 +59,7 @@ operators.forEach((op) => {
       val1 = parseFloat(op2.value.substring(0, length - 1));
       oper = op2.value.substring(length - 1);
       if (op1.value == "" || op1.value == 0) {
-        val2 = 0;
+        val2 = "";
       } else {
         val2 = parseFloat(op1.value);
       }
@@ -93,7 +106,7 @@ ans.addEventListener("click", () => {
     val1 = parseFloat(op2.value.substring(0, length - 1));
     oper = op2.value.substring(length - 1);
     if (op1.value == "" || op1.value == 0) {
-      val2 = 0;
+      val2 = "";
     } else {
       val2 = parseFloat(op1.value);
     }
