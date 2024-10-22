@@ -14,16 +14,13 @@ let operators = document.querySelectorAll(".op");
 
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
-    if((op1.value == "0" || op1.value == "") && (num.innerText != ".")){
+    if ((op1.value == "0" || op1.value == "") && num.innerText != ".") {
       op1.value = num.innerText;
-    }
-    else if((op1.value == "0" || op1.value == "") && (num.innerText == ".")){
+    } else if ((op1.value == "0" || op1.value == "") && num.innerText == ".") {
       op1.value = "0.";
-    }
-    else if(op1.value.includes(".") && (num.innerText == ".")){
+    } else if (op1.value.includes(".") && num.innerText == ".") {
       op1.value = op1.value;
-    }
-    else{
+    } else {
       op1.value += num.innerText;
     }
   });
@@ -39,8 +36,7 @@ sqrt.addEventListener("click", () => {
   if (op1.value != "" || op1.value != 0) {
     op2.value = Math.sqrt(parseFloat(op1.value));
     op1.value = "";
-  }
-  else {
+  } else {
     alert("Enter a number first!");
   }
 });
@@ -54,54 +50,68 @@ back.addEventListener("click", () => {
 
 operators.forEach((op) => {
   op.addEventListener("click", () => {
-    if (op2.value != "" || op2.value != 0) {
-      length = op2.value.length;
-      val1 = parseFloat(op2.value.substring(0, length - 1));
-      oper = op2.value.substring(length - 1);
-      if (op1.value == "" || op1.value == 0) {
-        val2 = "";
+    if((op1.value == "") && (op2.value == "")) {
+      alert("Enter a number first!");
+      return;
+    }
+    else{
+      if (op2.value != "") {
+        length = op2.value.length;
+        val1 = parseFloat(op2.value.substring(0, length - 1));
+        oper = op.innerText;
+        if (op1.value == "" || op1.value == 0) {
+          val2 = "";
+        } else {
+          val2 = parseFloat(op1.value);
+        }
+        switch (oper) {
+          case "+":
+            result = val1 + val2;
+            break;
+          case "-":
+            result = val1 - val2;
+            break;
+          case "*":
+            result = val1 * val2;
+            break;
+          case "/":
+            result = val1 / val2;
+            break;
+          case "%":
+            result = val1 % val2;
+            break;
+          case "=":
+            op1.value = "";
+            op2.value = result;
+          default:
+            console.log("Invalid operator");
+            break;
+        }
+        oper = op.innerText;
+        op2.value = result + oper;
+        op1.value = "";
       } else {
-        val2 = parseFloat(op1.value);
+        if (op1.value != "") {
+          length = op1.value.length;
+          val1 = parseFloat(op1.value.substring(0, length));
+          oper = op.innerText;
+          console.log(val1, oper);
+          op2.value = val1 + oper;
+          op1.value = "";
+        } else {
+          alert("Enter a number first!");
+        }
       }
-      console.log(val1, val2, oper);
-      switch (oper) {
-        case "+":
-          result = val1 + val2;
-          break;
-        case "-":
-          result = val1 - val2;
-          break;
-        case "*":
-          result = val1 * val2;
-          break;
-        case "/":
-          result = val1 / val2;
-          break;
-        case "%":
-          result = val1 % val2;
-          break;
-        case "=":
-          op1.value = result;
-          op2.value = "";
-        default:
-          console.log("Invalid operator");
-          break;
-      }
-      oper = op.innerText;
-      op2.value = result + oper;
-      op1.value = "";
-    } else {
-      val1 = parseFloat(op1.value);
-      oper = op.innerText;
-      console.log(val1, oper);
-      op2.value = val1 + oper;
-      op1.value = "";
     }
   });
 });
 
 ans.addEventListener("click", () => {
-  if (op2.value != "" || op2.value != 0) {
+  if((op1.value == "") && (op2.value == "")) {
+    alert("Enter a number first!");
+    return;
+  }
+  else if (op2.value != "") {
     length = op2.value.length;
     val1 = parseFloat(op2.value.substring(0, length - 1));
     oper = op2.value.substring(length - 1);
@@ -149,3 +159,4 @@ ans.addEventListener("click", () => {
     op1.value = "";
   }
 });
+
